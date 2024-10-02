@@ -1,0 +1,4 @@
+services:
+  ninetofiver:
+    ports:
+      - "${NINETOFIVER_EXPOSED_PORT:?}:8000"

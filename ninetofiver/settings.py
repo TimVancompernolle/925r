@@ -157,10 +157,10 @@ class Base(Configuration):
     # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'mysql.connector.django',
             'HOST': os.getenv('MYSQL_HOST', 'mysql.{env}.925r.local'.format(env=ENVIRONMENT)),
             'PORT': os.getenv('MYSQL_PORT', '3306'),
-            'NAME': os.getenv('MYSQL_DB', 'ninetofiver'),
+            'NAME': os.getenv('MYSQL_DATABASE', 'ninetofiver'),
             'USER': os.getenv('MYSQL_USER', 'ninetofiver'),
             'PASSWORD': os.getenv('MYSQL_PASSWORD', ''),
             'OPTIONS': {
@@ -370,10 +370,10 @@ class Dev(Base):
     # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'mysql.connector.django',
             'HOST': os.getenv('MYSQL_HOST', 'mysql'),
             'PORT': os.getenv('MYSQL_PORT', '3306'),
-            'NAME': os.getenv('MYSQL_DB', 'ninetofiver'),
+            'NAME': os.getenv('MYSQL_DATABASE', 'ninetofiver'),
             'USER': os.getenv('MYSQL_USER', 'ninetofiver'),
             'PASSWORD': os.getenv('MYSQL_PASSWORD', 'ninetofiver'),
             'OPTIONS': {

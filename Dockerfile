@@ -18,7 +18,7 @@ RUN set -ex && pipenv install --system --deploy
 
 FROM builder as final
 WORKDIR /code
-COPY . /app/
+COPY . . 
 
 RUN set -ex && bash -c "eval $(grep 'PYTHONDONTWRITEBYTECODE' .env)"
 RUN set -ex && bash -c "eval $(grep 'PYTHONUNBUFFERED' .env)"

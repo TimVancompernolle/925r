@@ -1,0 +1,32 @@
+services:
+  ninetofiver:
+    environment:
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE?}
+      - DJANGO_CONFIGURATION=${DJANGO_CONFIGURATION?}
+      - CFG_FILE_PATH=${CFG_FILE_PATH?}
+      - MYSQL_DATABASE=${MYSQL_DATABASE?}
+      - MYSQL_USER=${MYSQL_USER?}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD?}
+      - PYTHONDONTWRITEBYTECODE=${PYTHONDONTWRITEBYTECODE?}
+      - PYTHONUNBUFFERED=${PYTHONUNBUFFERED?}
+    command: |
+      bash -c "
+        python manage.py migrate
+        echo \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME?}', '${SUPERUSER_EMAIL?}', '${SUPERUSER_PASSWORD?}')\" | python manage.py shell || true
+        echo \"from oauth2_provider.models import Application; from django.contrib.auth import get_user_model; User = get_user_model(); client = Application.objects.create(user=User.objects.filter(is_staff=True)[0], name='${API_APPLICATION_NAME?}', client_id='${API_APPLICATION_CLIENT_ID?}', client_secret='${API_APPLICATION_CLIENT_SECRET?}', authorization_grant_type=Application.GRANT_PASSWORD)\" | python manage.py shell || true
+        python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - ninetofiver-files:/code
+volumes:
+
+  ninetofiver-files:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${PWD?}
+
+networks:
+
+  ninetofiver:

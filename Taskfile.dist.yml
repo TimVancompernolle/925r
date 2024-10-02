@@ -1,0 +1,32 @@
+version: '3'
+
+env:
+  COMPOSE: docker compose
+
+dotenv: ['.env'] # first file takes precedence
+
+tasks:
+  default:
+    cmds:
+      - "'{{.TASK_EXE}}' --list-all"
+
+  .env:
+    desc: Initiate the .env file
+    cmds:
+      - cp "{{.TASK}}.dist" "{{.TASK}}"
+    generates:
+      - "{{.TASK}}"
+    status:
+      - test -f "{{.TASK}}"
+    silent: true
+
+  prepare:
+    desc: Prepare your setup
+    deps: [.env]
+
+  build:
+    desc: Build your services
+    deps: [prepare]
+    cmds:
+      - |
+        {{.COMPOSE}} build --no-cache
