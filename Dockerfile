@@ -7,14 +7,15 @@ RUN apt-get update && \
     apt-get install -y gcc default-libmysqlclient-dev pkg-config
 
 # Copy Pipfile dependency list
-COPY Pipfile Pipfile
-COPY Pipfile.lock Pipfile.lock
+COPY pyproject.toml pyproject.toml
+COPY poetry.lock poetry.lock
 
-# Install pipenv
-RUN set -ex && pip install --upgrade pip && pip install pipenv
+# Install Poetry
+RUN pip install poetry
 
 # Install dependencies
-RUN set -ex && pipenv install --system --deploy
+RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi
+
 
 FROM builder as final
 WORKDIR /code

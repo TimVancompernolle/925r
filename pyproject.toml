@@ -1,9 +1,12 @@
-[[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+[tool.poetry]
+name = "code"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
 
-[packages]
+[tool.poetry.dependencies]
+python = "^3.9"
 asgiref = "*"
 autopep8 = "*"
 certifi = "*"
@@ -104,15 +107,14 @@ zipp = "*"
 mysql-connector-python = "*"
 crispy-bootstrap4 = "*"
 django-rangefilter = "*"
+django-minio-backend = "*"
 
-[dev-packages]
+[tool.poetry.group.dev.dependencies]
 isort = "*"
 pudb = "*"
 pylint = "*"
 tox = "*"
 
-[requires]
-python_version = "3.9"
-
-[pipenv]
-allow_prereleases = true
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
