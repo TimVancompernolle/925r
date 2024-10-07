@@ -205,12 +205,11 @@ class Base(Configuration):
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/1.10/howto/static-files/
-#    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
-    STATIC_URL = 'http://minio:9000/static/'
-
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    STATIC_URL = '/static/'
     # User-uploaded files
-#    MEDIA_ROOT = values.Value(os.path.join(BASE_DIR, 'media/'))
-
+    MEDIA_ROOT = values.Value(os.path.join(BASE_DIR, 'media/'))
+    MEDIA_URL = '/media/'
     # Auth
     LOGIN_URL = 'login'
     LOGOUT_URL = 'logout'
@@ -350,33 +349,29 @@ class Base(Configuration):
     ROCKETCHAT_PERFORMANCE_REMINDER_NOTIFICATION_ENABLED = values.Value(True)
     ROCKETCHAT_TIMESHEET_REMINDER_NOTIFICATION_ENABLED = values.Value(True)
 
-    # MinIO settings
-
-    STORAGES = {
-    "default": {
-        "BACKEND": 'django_minio_backend.models.MinioBackend',
-        "OPTIONS": {
-            "bucket_name": "media",  # Bucket for media files
-            },
-        },
-    "staticfiles": {
-        "BACKEND": 'django_minio_backend.models.MinioBackend',
-        "OPTIONS": {
-            "bucket_name": "static",  # Bucket for static files
-            },
-        },
-    }
-
-    MINIO_ENDPOINT = "minio:9000"
-    MINIO_ACCESS_KEY = "minio"  # change me in child class
-    MINIO_SECRET_KEY = "minio123321"  # change me in child class
-    MINIO_USE_HTTPS = False
-    MINIO_PUBLIC_BUCKETS = ["media", "static"]
-    MINIO_MEDIA_FILES_BUCKET = "media"
-    MINIO_STATIC_FILES_BUCKET = "static"
-    MINIO_CONSISTENCY_CHECK_ON_START = False
-    MINIO_EXTERNAL_ENDPOINT = "minio:9000"  # Or use an external domain if MinIO is publicly accessible
-    MINIO_EXTERNAL_ENDPOINT_USE_HTTPS = False
+#    # MinIO settings
+#
+#    STORAGES = {
+#    "default": {
+#        "BACKEND": 'django_minio_backend.models.MinioBackend',
+#        "OPTIONS": {
+#            "bucket_name": "media",  # Bucket for media files
+#            },
+#        },
+#    "staticfiles": {
+#        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+#        },
+#    }
+#
+#    MINIO_ENDPOINT = "minio:9000"
+#    MINIO_ACCESS_KEY = "minio"  # change me in child class
+#    MINIO_SECRET_KEY = "minio123321"  # change me in child class
+#    MINIO_USE_HTTPS = False
+#    MINIO_PUBLIC_BUCKETS = ["media"]
+#    MINIO_MEDIA_FILES_BUCKET = "media"
+#    MINIO_CONSISTENCY_CHECK_ON_START = False
+#    MINIO_EXTERNAL_ENDPOINT = "minio:9000"  # Or use an external domain if MinIO is publicly accessible
+#    MINIO_EXTERNAL_ENDPOINT_USE_HTTPS = False
 
 class Dev(Base):
     """Dev configuration."""
